@@ -5,8 +5,13 @@ from pathlib import Path
 def parse_command_line_args():
     parser = argparse.ArgumentParser(
         prog='duplicate_file_finder.py',
-        usage='Find duplicate files/directories and display them.',
-        add_help=True
+        description=
+"""
+description:
+Find duplicate files/directories within a specified directory and its subdirectories.
+"""
+,
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
 
     parser.add_argument(
