@@ -2,19 +2,24 @@ import argparse
 from pathlib import Path
 
 
-def parse_command_line_arguments():
+def parse_command_line_args():
     parser = argparse.ArgumentParser(
         prog='duplicate_file_finder.py',
         usage='Find duplicate files/directories and display them.',
         add_help=True
     )
 
-    args = parser.parse_args()
+    parser.add_argument(
+        'search_dir',
+        help='Path of the directory to search. Subdirectories are searched as well.'
+    )
+
+    return parser.parse_args()
 
 
-def find_duplicate_name_paths():
+def find_duplicate_name_paths(command_line_args):
     duplicate_name_paths = set()
-    all_paths = list(Path('.').glob('**/*'))
+    all_paths = list(Path(command_line_args.search_dir).glob('**/*'))
 
     for path in all_paths:
         for target_path in all_paths:
@@ -26,8 +31,8 @@ def find_duplicate_name_paths():
 
 
 def main():
-    parse_command_line_arguments()
-    duplicate_name_paths = find_duplicate_name_paths()
+    command_line_args = parse_command_line_args()
+    duplicate_name_paths = find_duplicate_name_paths(command_line_args)
     for path in duplicate_name_paths:
         print(path)
 
